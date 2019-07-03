@@ -6,10 +6,20 @@
 
 #include "memory.h"
 
-int pinClock = 5;
+/*
+BOARD: Uno, Nano, Mini
+PWM PINS: 3, 5, 6, 9, 10, 11
+PWM FREQUENCY: 490 Hz (pins 5 and 6: 980 Hz)
+
+BOARD: Mega
+PWM PINS: 2 - 13, 44 - 46
+PWM FREQUENCY: 490 Hz (pins 4 and 13: 980 Hz)
+*/
+int pinClock = 4;
+
 int pinReady = 2;
 int pinReset = 3;
-int pinRW = 4;
+int pinRW = 5;
 int pinsData[8] = { 6, 7, 8, 9, 10, 11, 12, 13 };
 
 bool autorun = false;
@@ -28,6 +38,16 @@ uint16_t getAddress() {
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
+  pinMode(A6, INPUT);
+  pinMode(A7, INPUT);
+  pinMode(A8, INPUT);
+  pinMode(A9, INPUT);
+  pinMode(A10, INPUT);
+  pinMode(A11, INPUT);
+  pinMode(A12, INPUT);
+  pinMode(A13, INPUT);
+  pinMode(A14, INPUT);
+  pinMode(A15, INPUT);
 
   bitWrite(address, 0, digitalRead(A0));
   bitWrite(address, 1, digitalRead(A1));
@@ -35,6 +55,16 @@ uint16_t getAddress() {
   bitWrite(address, 3, digitalRead(A3));
   bitWrite(address, 4, digitalRead(A4));
   bitWrite(address, 5, digitalRead(A5));
+  bitWrite(address, 6, digitalRead(A6));
+  bitWrite(address, 7, digitalRead(A7));
+  bitWrite(address, 8, digitalRead(A8));
+  bitWrite(address, 9, digitalRead(A9));
+  bitWrite(address, 10, digitalRead(A10));
+  bitWrite(address, 11, digitalRead(A11));
+  bitWrite(address, 12, digitalRead(A12));
+  bitWrite(address, 13, digitalRead(A13));
+  bitWrite(address, 14, digitalRead(A14));
+  bitWrite(address, 15, digitalRead(A15));
 
   return address;
 }
@@ -120,12 +150,10 @@ void loop() {
     data = getData();
   }
   else {
-    // READ 0xfffc
-    if (address == 0x3c) {
+    if (address == 0xfffc) {
       data = 0x02;
     }
-    // READ 0xfffd
-    else if (address == 0x3d) {
+    else if (address == 0xfffd) {
       data = 0x00;
     }
     else {
